@@ -2,11 +2,11 @@
 
 This repository documents my IoT-focused home lab setup. It is designed for testing, learning, and deploying smart home, networking, and sensor platforms using a robust virtualized environment.
 
-## 🧠 Overview
+## Overview
 
 My home lab leverages powerful mini PCs and open-source software to simulate a scalable, secure IoT environment. It includes LoRaWAN integration, smart home automation, monitoring, and network experimentation.
 
-## 🧰 Hardware
+## Hardware
 
 - **Router**: UniFi Express Router
 - **5G Gateway**: Inseego FX3100 (Ethernet-connected)
@@ -20,7 +20,7 @@ My home lab leverages powerful mini PCs and open-source software to simulate a s
   - 4-bay DAS connected to a **ZimaBoard** running **TrueNAS**
   - Zima also serves as quorum (third node) for Proxmox cluster
 
-## 🛠️ Core Services
+## Core Services
 
 | Service        | Description                                     |
 |----------------|-------------------------------------------------|
@@ -31,7 +31,7 @@ My home lab leverages powerful mini PCs and open-source software to simulate a s
 | **PostgreSQL** | Database backend for ChirpStack and others      |
 | **Grafana**    | Visualization for system metrics and sensor data |
 
-## 📡 IoT & Automation
+## IoT & Automation
 
 - Zigbee (via Zigbee2MQTT)
 - LoRaWAN (via ChirpStack and RAK gateways)
@@ -39,19 +39,19 @@ My home lab leverages powerful mini PCs and open-source software to simulate a s
 - ESPHome, ESPresence, and custom ESP32 nodes
 - Frigate for local NVR with object detection
 
-## 🔐 Networking & Access
+## Networking & Access
 
 - VLAN-separated networks
 - DNS: Pi-hole
 - VPN: Tailscale (remote access)
 - Cloudflare Tunnel for secure web access
 
-## 🎯 Goals
+## Goals
 
 - Run self-hosted services with high availability
 - Monitor and automate home environment
 - Explore LoRaWAN, Zigbee, and Bluetooth integrations
 - Maintain full local control and security
 
-## 📁 Repository Structure
+## Repository Structure
 
