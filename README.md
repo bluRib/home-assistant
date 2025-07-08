@@ -1,4 +1,4 @@
-# IoT Home Lab
+# Starbase is my IoT Home Lab
 
 This repository documents my IoT-focused home lab setup. It is designed for testing, learning, and deploying smart home, networking, and sensor platforms using a robust virtualized environment.
 
