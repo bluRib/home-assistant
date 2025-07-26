@@ -1,57 +1,75 @@
-# Starbase is my IoT Home Lab
+# Home Assistant Configuration
 
-This repository documents my IoT-focused home lab setup. It is designed for testing, learning, and deploying smart home, networking, and sensor platforms using a robust virtualized environment.
+This repository contains the configuration files and custom components used in a personal instance of [Home Assistant](https://www.home-assistant.io/), a powerful open-source platform for smart home automation.
 
 ## Overview
 
-My home lab leverages powerful mini PCs and open-source software to simulate a scalable, secure IoT environment. It includes LoRaWAN integration, smart home automation, monitoring, and network experimentation.
-
-## Hardware
-
-- **Router**: UniFi Express Router
-- **5G Gateway**: Inseego FX3100 (Ethernet-connected)
-- **Compute**: 2x Beelink EQR5 Mini PCs  
-  - AMD Ryzen 5 PRO 5650U (6 cores / 12 threads, 2.3–4.2GHz)
-  - 32GB DDR4 RAM each
-  - 500GB M.2 PCIe 3.0 x4 SSDs
-  - Dual Gigabit Ethernet, WiFi 6, Bluetooth 5.2
-- **Virtualization**: Proxmox VE (acts as my Hyper-V replacement)
-- **Storage**:  
-  - 4-bay DAS connected to a **ZimaBoard** running **TrueNAS**
-  - Zima also serves as quorum (third node) for Proxmox cluster
-
-## Core Services
-
-| Service        | Description                                     |
-|----------------|-------------------------------------------------|
-| **Proxmox VE** | Virtualization for all services and containers  |
-| **Home Assistant** | Smart home hub for automations and devices |
-| **Node-RED**   | Visual automation engine connected to HA & MQTT |
-| **ChirpStack** | LoRaWAN Network Server for sensor data ingestion |
-| **PostgreSQL** | Database backend for ChirpStack and others      |
-| **Grafana**    | Visualization for system metrics and sensor data |
-
-## IoT & Automation
-
-- Zigbee (via Zigbee2MQTT)
-- LoRaWAN (via ChirpStack and RAK gateways)
-- MQTT for real-time messaging
-- ESPHome, ESPresence, and custom ESP32 nodes
-- Frigate for local NVR with object detection
-
-## Networking & Access
-
-- VLAN-separated networks
-- DNS: Pi-hole
-- VPN: Tailscale (remote access)
-- Cloudflare Tunnel for secure web access
-
-## Goals
-
-- Run self-hosted services with high availability
-- Monitor and automate home environment
-- Explore LoRaWAN, Zigbee, and Bluetooth integrations
-- Maintain full local control and security
+This setup is designed to provide reliable and flexible automation for a variety of smart home devices and integrations. It includes structured YAML files for organizing automations, sensors, scripts, and scenes, along with optional custom components and themes.
 
 ## Repository Structure
 
+```
+home-assistant-config/
+│
+├── configuration.yaml         # Main configuration file
+├── secrets.yaml               # Sensitive variables (not tracked)
+├── automations.yaml           # Automation rules
+├── scripts.yaml               # Custom scripts
+├── scenes.yaml                # Scenes configuration
+│
+├── custom_components/         # Optional custom integrations
+│
+├── packages/                  # Logical grouping of configuration
+│
+├── themes/                    # UI themes for Lovelace
+│
+└── www/                       # Static files for frontend (icons, images)
+```
+
+## Features
+
+- Organized YAML-based configuration
+- Automation for lighting, security, presence, and environment control
+- Custom sensors, binary sensors, and templates
+- Support for MQTT, ESPHome, Zigbee, and other integrations
+- Lovelace UI customizations and themes
+- Secure use of secrets and token management
+
+## Getting Started
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/yourusername/home-assistant-config.git
+cd home-assistant-config
+```
+
+2. Review and update `secrets.yaml` with your environment-specific credentials.
+
+3. Validate the configuration:
+
+```bash
+ha core check
+```
+
+Or using Docker:
+
+```bash
+docker run --rm -v $(pwd):/config homeassistant/home-assistant:stable --config /config --script check_config
+```
+
+4. Restart Home Assistant to apply changes.
+
+## Recommendations
+
+- Use Git to version control and back up your configuration.
+- Use `secrets.yaml` for all sensitive credentials or keys.
+- Keep `custom_components` and `www` organized for performance and clarity.
+
+## Contributing
+
+This repository is maintained as a personal project. Feel free to fork it or use the structure as a reference for your own Home Assistant setup.
+
+## License
+
+This project is licensed under the MIT License. See the `LICENSE` file for details.
