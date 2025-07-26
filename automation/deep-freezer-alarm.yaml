@@ -1,0 +1,39 @@
+alias: Deep-freezer door alarm
+triggers:
+  - id: door_open_1min
+    device_id: {device_id}
+    domain: binary_sensor
+    entity_id: {entity_id}
+    type: opened
+    for:
+      minutes: 1
+    trigger: device
+  - id: door_closed
+    device_id: {device_id}
+    domain: binary_sensor
+    entity_id: {entity_id}
+    type: not_opened
+    trigger: device
+actions:
+  - choose:
+      - conditions:
+          - condition: trigger
+            id: door_open_1min
+        sequence:
+          - action: switch.turn_on
+            target:
+              entity_id:
+                - {entity_id}
+                - {entity_id}
+            data: {}
+      - conditions:
+          - condition: trigger
+            id: door_closed
+        sequence:
+          - action: switch.turn_off
+            target:
+              entity_id:
+                - {entity_id}
+                - {entity_id}
+            data: {}
+mode: restart
