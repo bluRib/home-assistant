@@ -1,1 +1,874 @@
-[{"id":"36b4aa5945636edf","type":"tab","label":"LoRaWAN Sensors Work Flow","disabled":false,"info":""},{"id":"e38e16e4bf139a71","type":"mqtt in","z":"36b4aa5945636edf","name":"All LHT65N Input","topic":"application/+/device/+/rx","qos":"2","datatype":"json","broker":"74a89488432c3108","nl":false,"rap":false,"inputs":0,"x":100,"y":260,"wires":[["638c36a313f66d07"]]},{"id":"638c36a313f66d07","type":"function","z":"36b4aa5945636edf","name":"Decode & Transform","func":"// your existing Decode() logic here...\nconst payload = msg.payload;\nconst bytes = Buffer.from(payload.data, 'base64');\n/* decoding code identical to your previous function */\nmsg.payload = decodedData;\nreturn msg;","outputs":1,"noerr":0,"x":320,"y":260,"wires":[["6a2073e87746c25b"]]},{"id":"6a2073e87746c25b","type":"switch","z":"36b4aa5945636edf","name":"Route by deviceEUI","property":"payload.deviceEUI","propertyType":"msg","rules":[{"t":"eq","v":"a840413450597ceb"},{"t":"eq","v":"a840412d51597cf2"},{"t":"eq","v":"a840416e61597cf7"},{"t":"eq","v":"a84041000181f576"},{"t":"eq","v":"a84041233185d9f0"}],"checkall":"true","outputs":5,"x":560,"y":380,"wires":[["e346146cca513107","9f52afcd0e8a4cb0"],["addfecab9752fa5c","7bc4c53e50379554","f5914152383721ea"],["b3614e90d308c76a","482915e7c89c667c"],["b8fc278187ecd6c5","466c8ab4adce04ae","5b3b1f6e05ca450e"],["064c61fa6bba1d8a","e4292692086443bf","4dbc2d16349c0301"]]},{"id":"9f52afcd0e8a4cb0","type":"mqtt out","z":"36b4aa5945636edf","name":"MQTT Out — DeepFreezer","topic":"home/deepfreezer/temperature/${payload.deviceEUI}","qos":"0","retain":"false","broker":"74a89488432c3108","x":840,"y":100,"wires":[]},{"id":"e346146cca513107","type":"ha-sensor","z":"36b4aa5945636edf","name":"Deep Freezer","entityConfig":"bade1b6d13c79de0","version":0,"state":"payload.TempF_SHT","stateType":"msg","attributes":[{"property":"Temperature (C)","value":"payload.TempC_SHT","valueType":"msg"},{"property":"Humidity (%)","value":"payload.Hum_SHT","valueType":"msg"},{"property":"Battery Voltage (V)","value":"payload.BatV","valueType":"msg"},{"property":"Battery Status","value":"payload.Bat_status_text","valueType":"msg"},{"property":"Device EUI","value":"payload.deviceEUI","valueType":"msg"}],"inputOverride":"allow","x":780,"y":40,"wires":[[]]},{"id":"f5914152383721ea","type":"mqtt out","z":"36b4aa5945636edf","name":"MQTT Out — Garage","topic":"home/garage/temperature/${payload.deviceEUI}","qos":"0","retain":"false","respTopic":"","contentType":"","userProps":"","correl":"","expiry":"","broker":"74a89488432c3108","x":900,"y":280,"wires":[]},{"id":"addfecab9752fa5c","type":"ha-sensor","z":"36b4aa5945636edf","name":"Garage Temp","entityConfig":"b9db354b84f4cd31","version":0,"state":"payload.TempF_SHT","stateType":"msg","attributes":[{"property":"Temperature (C)","value":"payload.TempC_SHT","valueType":"msg"},{"property":"Humidity (%)","value":"payload.Hum_SHT","valueType":"msg"},{"property":"Battery Voltage (V)","value":"payload.BatV","valueType":"msg"},{"property":"Battery Status","value":"payload.Bat_status_text","valueType":"msg"},{"property":"Device EUI","value":"payload.deviceEUI","valueType":"msg"}],"inputOverride":"allow","x":840,"y":160,"wires":[[]]},{"id":"7bc4c53e50379554","type":"ha-sensor","z":"36b4aa5945636edf","name":"Garage Humidity","entityConfig":"91952de9df741522","version":0,"state":"payload.Hum_SHT","stateType":"msg","attributes":[{"property":"Temperature (C)","value":"payload.TempC_SHT","valueType":"msg"},{"property":"Battery Voltage (V)","value":"payload.BatV","valueType":"msg"},{"property":"Battery Status","value":"payload.Bat_status_text","valueType":"msg"},{"property":"Device EUI","value":"payload.deviceEUI","valueType":"msg"}],"inputOverride":"allow","x":870,"y":220,"wires":[[]]},{"id":"482915e7c89c667c","type":"mqtt out","z":"36b4aa5945636edf","name":"MQTT Out — Fridge","topic":"home/ge_fridge/temperature/${payload.deviceEUI}","qos":"0","retain":"false","respTopic":"","contentType":"","userProps":"","correl":"","expiry":"","broker":"74a89488432c3108","x":940,"y":400,"wires":[]},{"id":"b3614e90d308c76a","type":"ha-sensor","z":"36b4aa5945636edf","name":"GE Fridge","entityConfig":"7737c20fbcdc76b8","version":0,"state":"payload.TempF_SHT","stateType":"msg","attributes":[{"property":"Temperature (C)","value":"payload.TempC_SHT","valueType":"msg"},{"property":"Humidity (%)","value":"payload.Hum_SHT","valueType":"msg"},{"property":"Battery Voltage (V)","value":"payload.BatV","valueType":"msg"},{"property":"Battery Status","value":"payload.Bat_status_text","valueType":"msg"},{"property":"Device EUI","value":"payload.deviceEUI","valueType":"msg"}],"inputOverride":"allow","x":890,"y":340,"wires":[[]]},{"id":"5b3b1f6e05ca450e","type":"mqtt out","z":"36b4aa5945636edf","name":"MQTT Out — Backyard","topic":"home/backyard/temperature/${payload.deviceEUI}","qos":"0","retain":"false","broker":"74a89488432c3108","x":1070,"y":760,"wires":[]},{"id":"b8fc278187ecd6c5","type":"ha-sensor","z":"36b4aa5945636edf","name":"Back Yard Temp","entityConfig":"911d188c6fd96064","version":0,"state":"payload.TempF_SHT","stateType":"msg","attributes":[{"property":"Temperature (C)","value":"payload.TempC_SHT","valueType":"msg"},{"property":"Humidity (%)","value":"payload.Hum_SHT","valueType":"msg"},{"property":"Battery Voltage (V)","value":"payload.BatV","valueType":"msg"},{"property":"Battery Status","value":"payload.Bat_status_text","valueType":"msg"},{"property":"Device EUI","value":"payload.deviceEUI","valueType":"msg"}],"inputOverride":"allow","x":1000,"y":640,"wires":[[]]},{"id":"466c8ab4adce04ae","type":"ha-sensor","z":"36b4aa5945636edf","name":"Back Yard Humidity","entityConfig":"b1426551bbdf832e","version":0,"state":"payload.Hum_SHT","stateType":"msg","attributes":[{"property":"Temperature (C)","value":"payload.TempC_SHT","valueType":"msg"},{"property":"Battery Voltage (V)","value":"payload.BatV","valueType":"msg"},{"property":"Battery Status","value":"payload.Bat_status_text","valueType":"msg"},{"property":"Device EUI","value":"payload.deviceEUI","valueType":"msg"}],"inputOverride":"allow","x":1030,"y":700,"wires":[[]]},{"id":"4dbc2d16349c0301","type":"mqtt out","z":"36b4aa5945636edf","name":"MQTT Out — Front Yard","topic":"home/frontyard/temperature/${payload.deviceEUI}","qos":"0","retain":"false","broker":"74a89488432c3108","x":1010,"y":580,"wires":[]},{"id":"064c61fa6bba1d8a","type":"ha-sensor","z":"36b4aa5945636edf","name":"Front Yard Temp","entityConfig":"c06514f9d2d760c4","version":0,"state":"payload.TempF_SHT","stateType":"msg","attributes":[{"property":"Temperature (C)","value":"payload.TempC_SHT","valueType":"msg"},{"property":"Humidity (%)","value":"payload.Hum_SHT","valueType":"msg"},{"property":"Battery Voltage (V)","value":"payload.BatV","valueType":"msg"},{"property":"Battery Status","value":"payload.Bat_status_text","valueType":"msg"},{"property":"Device EUI","value":"payload.deviceEUI","valueType":"msg"}],"inputOverride":"allow","x":940,"y":460,"wires":[[]]},{"id":"e4292692086443bf","type":"ha-sensor","z":"36b4aa5945636edf","name":"Front Yard Humidity","entityConfig":"7fb28df225f2247e","version":0,"state":"payload.Hum_SHT","stateType":"msg","attributes":[{"property":"Temperature (C)","value":"payload.TempC_SHT","valueType":"msg"},{"property":"Battery Voltage (V)","value":"payload.BatV","valueType":"msg"},{"property":"Battery Status","value":"payload.Bat_status_text","valueType":"msg"},{"property":"Device EUI","value":"payload.deviceEUI","valueType":"msg"}],"inputOverride":"allow","outputProperties":[],"x":970,"y":520,"wires":[[]]},{"id":"74a89488432c3108","type":"mqtt-broker","name":"MQTT-Broker","broker":"10.69.2.69","port":"1883","clientid":"","autoConnect":true,"usetls":false,"protocolVersion":"4","keepalive":"60","cleansession":true,"autoUnsubscribe":true,"birthTopic":"","birthQos":"0","birthRetain":"false","birthPayload":"","birthMsg":{},"closeTopic":"","closeQos":"0","closeRetain":"false","closePayload":"","closeMsg":{},"willTopic":"","willQos":"0","willRetain":"false","willPayload":"","willMsg":{},"userProps":"","sessionExpiry":""},{"id":"bade1b6d13c79de0","type":"ha-entity-config","server":"aad6d111.1f1d3","deviceConfig":"","name":"deepfreezer","version":"6","entityType":"sensor","haConfig":[{"property":"name","value":"Deep Freezer"},{"property":"icon","value":""},{"property":"entity_picture","value":""},{"property":"entity_category","value":""},{"property":"device_class","value":"temperature"},{"property":"unit_of_measurement","value":"°F"},{"property":"state_class","value":"measurement"}],"resend":false,"debugEnabled":true},{"id":"b9db354b84f4cd31","type":"ha-entity-config","server":"aad6d111.1f1d3","deviceConfig":"","name":"garage_temp","version":"6","entityType":"sensor","haConfig":[{"property":"name","value":""},{"property":"icon","value":""},{"property":"entity_picture","value":""},{"property":"entity_category","value":""},{"property":"device_class","value":"temperature"},{"property":"unit_of_measurement","value":"°F"},{"property":"state_class","value":"measurement"}],"resend":false,"debugEnabled":false},{"id":"91952de9df741522","type":"ha-entity-config","server":"aad6d111.1f1d3","deviceConfig":"","name":"garage_hum","version":"6","entityType":"sensor","haConfig":[{"property":"name","value":""},{"property":"icon","value":""},{"property":"entity_picture","value":""},{"property":"entity_category","value":""},{"property":"device_class","value":"humidity"},{"property":"unit_of_measurement","value":"%"},{"property":"state_class","value":"measurement"}],"resend":false,"debugEnabled":false},{"id":"7737c20fbcdc76b8","type":"ha-entity-config","server":"aad6d111.1f1d3","deviceConfig":"","name":"ge_fridge","version":"6","entityType":"sensor","haConfig":[{"property":"name","value":"GE Fridge"},{"property":"icon","value":""},{"property":"entity_picture","value":""},{"property":"entity_category","value":""},{"property":"device_class","value":"temperature"},{"property":"unit_of_measurement","value":"°F"},{"property":"state_class","value":"measurement"}],"resend":false,"debugEnabled":false},{"id":"911d188c6fd96064","type":"ha-entity-config","server":"aad6d111.1f1d3","deviceConfig":"","name":"Back Yard Temp","version":"6","entityType":"sensor","haConfig":[{"property":"name","value":""},{"property":"icon","value":""},{"property":"entity_picture","value":""},{"property":"entity_category","value":""},{"property":"device_class","value":"temperature"},{"property":"unit_of_measurement","value":"°F"},{"property":"state_class","value":"measurement"}],"resend":false,"debugEnabled":false},{"id":"b1426551bbdf832e","type":"ha-entity-config","server":"aad6d111.1f1d3","deviceConfig":"","name":"backyard_hum","version":"6","entityType":"sensor","haConfig":[{"property":"name","value":""},{"property":"icon","value":""},{"property":"entity_picture","value":""},{"property":"entity_category","value":""},{"property":"device_class","value":"humidity"},{"property":"unit_of_measurement","value":"%"},{"property":"state_class","value":"measurement"}],"resend":false,"debugEnabled":false},{"id":"c06514f9d2d760c4","type":"ha-entity-config","server":"aad6d111.1f1d3","deviceConfig":"","name":"Front Yard Temp","version":"6","entityType":"sensor","haConfig":[{"property":"name","value":""},{"property":"icon","value":""},{"property":"entity_picture","value":""},{"property":"entity_category","value":""},{"property":"device_class","value":"temperature"},{"property":"unit_of_measurement","value":"°F"},{"property":"state_class","value":"measurement"}],"resend":false,"debugEnabled":false},{"id":"7fb28df225f2247e","type":"ha-entity-config","server":"aad6d111.1f1d3","deviceConfig":"","name":"front yard temp","version":"6","entityType":"sensor","haConfig":[{"property":"name","value":""},{"property":"icon","value":""},{"property":"entity_picture","value":""},{"property":"entity_category","value":""},{"property":"device_class","value":"humidity"},{"property":"unit_of_measurement","value":"%"},{"property":"state_class","value":""}],"resend":false,"debugEnabled":false},{"id":"aad6d111.1f1d3","type":"server","name":"Home Assistant","addon":true}]
+[
+    {
+        "id": "36b4aa5945636edf",
+        "type": "tab",
+        "label": "LoRaWAN Sensors Work Flow",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "e38e16e4bf139a71",
+        "type": "mqtt in",
+        "z": "36b4aa5945636edf",
+        "name": "All LHT65N Input",
+        "topic": "application/+/device/+/rx",
+        "qos": "2",
+        "datatype": "json",
+        "broker": "74a89488432c3108",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 100,
+        "y": 260,
+        "wires": [
+            [
+                "638c36a313f66d07"
+            ]
+        ]
+    },
+    {
+        "id": "638c36a313f66d07",
+        "type": "function",
+        "z": "36b4aa5945636edf",
+        "name": "Decode & Transform",
+        "func": "// your existing Decode() logic here...\nconst payload = msg.payload;\nconst bytes = Buffer.from(payload.data, 'base64');\n/* decoding code identical to your previous function */\nmsg.payload = decodedData;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 320,
+        "y": 260,
+        "wires": [
+            [
+                "6a2073e87746c25b"
+            ]
+        ]
+    },
+    {
+        "id": "6a2073e87746c25b",
+        "type": "switch",
+        "z": "36b4aa5945636edf",
+        "name": "Route by deviceEUI",
+        "property": "payload.deviceEUI",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "a840413450597ceb"
+            },
+            {
+                "t": "eq",
+                "v": "a840412d51597cf2"
+            },
+            {
+                "t": "eq",
+                "v": "a840416e61597cf7"
+            },
+            {
+                "t": "eq",
+                "v": "a84041000181f576"
+            },
+            {
+                "t": "eq",
+                "v": "a84041233185d9f0"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 5,
+        "x": 560,
+        "y": 380,
+        "wires": [
+            [
+                "e346146cca513107",
+                "9f52afcd0e8a4cb0"
+            ],
+            [
+                "addfecab9752fa5c",
+                "7bc4c53e50379554",
+                "f5914152383721ea"
+            ],
+            [
+                "b3614e90d308c76a",
+                "482915e7c89c667c"
+            ],
+            [
+                "b8fc278187ecd6c5",
+                "466c8ab4adce04ae",
+                "5b3b1f6e05ca450e"
+            ],
+            [
+                "064c61fa6bba1d8a",
+                "e4292692086443bf",
+                "4dbc2d16349c0301"
+            ]
+        ]
+    },
+    {
+        "id": "9f52afcd0e8a4cb0",
+        "type": "mqtt out",
+        "z": "36b4aa5945636edf",
+        "name": "MQTT Out — DeepFreezer",
+        "topic": "home/deepfreezer/temperature/${payload.deviceEUI}",
+        "qos": "0",
+        "retain": "false",
+        "broker": "74a89488432c3108",
+        "x": 840,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "e346146cca513107",
+        "type": "ha-sensor",
+        "z": "36b4aa5945636edf",
+        "name": "Deep Freezer",
+        "entityConfig": "bade1b6d13c79de0",
+        "version": 0,
+        "state": "payload.TempF_SHT",
+        "stateType": "msg",
+        "attributes": [
+            {
+                "property": "Temperature (C)",
+                "value": "payload.TempC_SHT",
+                "valueType": "msg"
+            },
+            {
+                "property": "Humidity (%)",
+                "value": "payload.Hum_SHT",
+                "valueType": "msg"
+            },
+            {
+                "property": "Battery Voltage (V)",
+                "value": "payload.BatV",
+                "valueType": "msg"
+            },
+            {
+                "property": "Battery Status",
+                "value": "payload.Bat_status_text",
+                "valueType": "msg"
+            },
+            {
+                "property": "Device EUI",
+                "value": "payload.deviceEUI",
+                "valueType": "msg"
+            }
+        ],
+        "inputOverride": "allow",
+        "x": 780,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f5914152383721ea",
+        "type": "mqtt out",
+        "z": "36b4aa5945636edf",
+        "name": "MQTT Out — Garage",
+        "topic": "home/garage/temperature/${payload.deviceEUI}",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "74a89488432c3108",
+        "x": 900,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "addfecab9752fa5c",
+        "type": "ha-sensor",
+        "z": "36b4aa5945636edf",
+        "name": "Garage Temp",
+        "entityConfig": "b9db354b84f4cd31",
+        "version": 0,
+        "state": "payload.TempF_SHT",
+        "stateType": "msg",
+        "attributes": [
+            {
+                "property": "Temperature (C)",
+                "value": "payload.TempC_SHT",
+                "valueType": "msg"
+            },
+            {
+                "property": "Humidity (%)",
+                "value": "payload.Hum_SHT",
+                "valueType": "msg"
+            },
+            {
+                "property": "Battery Voltage (V)",
+                "value": "payload.BatV",
+                "valueType": "msg"
+            },
+            {
+                "property": "Battery Status",
+                "value": "payload.Bat_status_text",
+                "valueType": "msg"
+            },
+            {
+                "property": "Device EUI",
+                "value": "payload.deviceEUI",
+                "valueType": "msg"
+            }
+        ],
+        "inputOverride": "allow",
+        "x": 840,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7bc4c53e50379554",
+        "type": "ha-sensor",
+        "z": "36b4aa5945636edf",
+        "name": "Garage Humidity",
+        "entityConfig": "91952de9df741522",
+        "version": 0,
+        "state": "payload.Hum_SHT",
+        "stateType": "msg",
+        "attributes": [
+            {
+                "property": "Temperature (C)",
+                "value": "payload.TempC_SHT",
+                "valueType": "msg"
+            },
+            {
+                "property": "Battery Voltage (V)",
+                "value": "payload.BatV",
+                "valueType": "msg"
+            },
+            {
+                "property": "Battery Status",
+                "value": "payload.Bat_status_text",
+                "valueType": "msg"
+            },
+            {
+                "property": "Device EUI",
+                "value": "payload.deviceEUI",
+                "valueType": "msg"
+            }
+        ],
+        "inputOverride": "allow",
+        "x": 870,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "482915e7c89c667c",
+        "type": "mqtt out",
+        "z": "36b4aa5945636edf",
+        "name": "MQTT Out — Fridge",
+        "topic": "home/ge_fridge/temperature/${payload.deviceEUI}",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "74a89488432c3108",
+        "x": 940,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "b3614e90d308c76a",
+        "type": "ha-sensor",
+        "z": "36b4aa5945636edf",
+        "name": "GE Fridge",
+        "entityConfig": "7737c20fbcdc76b8",
+        "version": 0,
+        "state": "payload.TempF_SHT",
+        "stateType": "msg",
+        "attributes": [
+            {
+                "property": "Temperature (C)",
+                "value": "payload.TempC_SHT",
+                "valueType": "msg"
+            },
+            {
+                "property": "Humidity (%)",
+                "value": "payload.Hum_SHT",
+                "valueType": "msg"
+            },
+            {
+                "property": "Battery Voltage (V)",
+                "value": "payload.BatV",
+                "valueType": "msg"
+            },
+            {
+                "property": "Battery Status",
+                "value": "payload.Bat_status_text",
+                "valueType": "msg"
+            },
+            {
+                "property": "Device EUI",
+                "value": "payload.deviceEUI",
+                "valueType": "msg"
+            }
+        ],
+        "inputOverride": "allow",
+        "x": 890,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5b3b1f6e05ca450e",
+        "type": "mqtt out",
+        "z": "36b4aa5945636edf",
+        "name": "MQTT Out — Backyard",
+        "topic": "home/backyard/temperature/${payload.deviceEUI}",
+        "qos": "0",
+        "retain": "false",
+        "broker": "74a89488432c3108",
+        "x": 1070,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "b8fc278187ecd6c5",
+        "type": "ha-sensor",
+        "z": "36b4aa5945636edf",
+        "name": "Back Yard Temp",
+        "entityConfig": "911d188c6fd96064",
+        "version": 0,
+        "state": "payload.TempF_SHT",
+        "stateType": "msg",
+        "attributes": [
+            {
+                "property": "Temperature (C)",
+                "value": "payload.TempC_SHT",
+                "valueType": "msg"
+            },
+            {
+                "property": "Humidity (%)",
+                "value": "payload.Hum_SHT",
+                "valueType": "msg"
+            },
+            {
+                "property": "Battery Voltage (V)",
+                "value": "payload.BatV",
+                "valueType": "msg"
+            },
+            {
+                "property": "Battery Status",
+                "value": "payload.Bat_status_text",
+                "valueType": "msg"
+            },
+            {
+                "property": "Device EUI",
+                "value": "payload.deviceEUI",
+                "valueType": "msg"
+            }
+        ],
+        "inputOverride": "allow",
+        "x": 1000,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "466c8ab4adce04ae",
+        "type": "ha-sensor",
+        "z": "36b4aa5945636edf",
+        "name": "Back Yard Humidity",
+        "entityConfig": "b1426551bbdf832e",
+        "version": 0,
+        "state": "payload.Hum_SHT",
+        "stateType": "msg",
+        "attributes": [
+            {
+                "property": "Temperature (C)",
+                "value": "payload.TempC_SHT",
+                "valueType": "msg"
+            },
+            {
+                "property": "Battery Voltage (V)",
+                "value": "payload.BatV",
+                "valueType": "msg"
+            },
+            {
+                "property": "Battery Status",
+                "value": "payload.Bat_status_text",
+                "valueType": "msg"
+            },
+            {
+                "property": "Device EUI",
+                "value": "payload.deviceEUI",
+                "valueType": "msg"
+            }
+        ],
+        "inputOverride": "allow",
+        "x": 1030,
+        "y": 700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4dbc2d16349c0301",
+        "type": "mqtt out",
+        "z": "36b4aa5945636edf",
+        "name": "MQTT Out — Front Yard",
+        "topic": "home/frontyard/temperature/${payload.deviceEUI}",
+        "qos": "0",
+        "retain": "false",
+        "broker": "74a89488432c3108",
+        "x": 1010,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "064c61fa6bba1d8a",
+        "type": "ha-sensor",
+        "z": "36b4aa5945636edf",
+        "name": "Front Yard Temp",
+        "entityConfig": "c06514f9d2d760c4",
+        "version": 0,
+        "state": "payload.TempF_SHT",
+        "stateType": "msg",
+        "attributes": [
+            {
+                "property": "Temperature (C)",
+                "value": "payload.TempC_SHT",
+                "valueType": "msg"
+            },
+            {
+                "property": "Humidity (%)",
+                "value": "payload.Hum_SHT",
+                "valueType": "msg"
+            },
+            {
+                "property": "Battery Voltage (V)",
+                "value": "payload.BatV",
+                "valueType": "msg"
+            },
+            {
+                "property": "Battery Status",
+                "value": "payload.Bat_status_text",
+                "valueType": "msg"
+            },
+            {
+                "property": "Device EUI",
+                "value": "payload.deviceEUI",
+                "valueType": "msg"
+            }
+        ],
+        "inputOverride": "allow",
+        "x": 940,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e4292692086443bf",
+        "type": "ha-sensor",
+        "z": "36b4aa5945636edf",
+        "name": "Front Yard Humidity",
+        "entityConfig": "7fb28df225f2247e",
+        "version": 0,
+        "state": "payload.Hum_SHT",
+        "stateType": "msg",
+        "attributes": [
+            {
+                "property": "Temperature (C)",
+                "value": "payload.TempC_SHT",
+                "valueType": "msg"
+            },
+            {
+                "property": "Battery Voltage (V)",
+                "value": "payload.BatV",
+                "valueType": "msg"
+            },
+            {
+                "property": "Battery Status",
+                "value": "payload.Bat_status_text",
+                "valueType": "msg"
+            },
+            {
+                "property": "Device EUI",
+                "value": "payload.deviceEUI",
+                "valueType": "msg"
+            }
+        ],
+        "inputOverride": "allow",
+        "outputProperties": [],
+        "x": 970,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "74a89488432c3108",
+        "type": "mqtt-broker",
+        "name": "MQTT-Broker",
+        "broker": "10.69.2.69",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "bade1b6d13c79de0",
+        "type": "ha-entity-config",
+        "server": "aad6d111.1f1d3",
+        "deviceConfig": "",
+        "name": "deepfreezer",
+        "version": "6",
+        "entityType": "sensor",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": "Deep Freezer"
+            },
+            {
+                "property": "icon",
+                "value": ""
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": "temperature"
+            },
+            {
+                "property": "unit_of_measurement",
+                "value": "°F"
+            },
+            {
+                "property": "state_class",
+                "value": "measurement"
+            }
+        ],
+        "resend": false,
+        "debugEnabled": true
+    },
+    {
+        "id": "b9db354b84f4cd31",
+        "type": "ha-entity-config",
+        "server": "aad6d111.1f1d3",
+        "deviceConfig": "",
+        "name": "garage_temp",
+        "version": "6",
+        "entityType": "sensor",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": "temperature"
+            },
+            {
+                "property": "unit_of_measurement",
+                "value": "°F"
+            },
+            {
+                "property": "state_class",
+                "value": "measurement"
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "91952de9df741522",
+        "type": "ha-entity-config",
+        "server": "aad6d111.1f1d3",
+        "deviceConfig": "",
+        "name": "garage_hum",
+        "version": "6",
+        "entityType": "sensor",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": "humidity"
+            },
+            {
+                "property": "unit_of_measurement",
+                "value": "%"
+            },
+            {
+                "property": "state_class",
+                "value": "measurement"
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "7737c20fbcdc76b8",
+        "type": "ha-entity-config",
+        "server": "aad6d111.1f1d3",
+        "deviceConfig": "",
+        "name": "ge_fridge",
+        "version": "6",
+        "entityType": "sensor",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": "GE Fridge"
+            },
+            {
+                "property": "icon",
+                "value": ""
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": "temperature"
+            },
+            {
+                "property": "unit_of_measurement",
+                "value": "°F"
+            },
+            {
+                "property": "state_class",
+                "value": "measurement"
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "911d188c6fd96064",
+        "type": "ha-entity-config",
+        "server": "aad6d111.1f1d3",
+        "deviceConfig": "",
+        "name": "Back Yard Temp",
+        "version": "6",
+        "entityType": "sensor",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": "temperature"
+            },
+            {
+                "property": "unit_of_measurement",
+                "value": "°F"
+            },
+            {
+                "property": "state_class",
+                "value": "measurement"
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "b1426551bbdf832e",
+        "type": "ha-entity-config",
+        "server": "aad6d111.1f1d3",
+        "deviceConfig": "",
+        "name": "backyard_hum",
+        "version": "6",
+        "entityType": "sensor",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": "humidity"
+            },
+            {
+                "property": "unit_of_measurement",
+                "value": "%"
+            },
+            {
+                "property": "state_class",
+                "value": "measurement"
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "c06514f9d2d760c4",
+        "type": "ha-entity-config",
+        "server": "aad6d111.1f1d3",
+        "deviceConfig": "",
+        "name": "Front Yard Temp",
+        "version": "6",
+        "entityType": "sensor",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": "temperature"
+            },
+            {
+                "property": "unit_of_measurement",
+                "value": "°F"
+            },
+            {
+                "property": "state_class",
+                "value": "measurement"
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "7fb28df225f2247e",
+        "type": "ha-entity-config",
+        "server": "aad6d111.1f1d3",
+        "deviceConfig": "",
+        "name": "front yard temp",
+        "version": "6",
+        "entityType": "sensor",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": "humidity"
+            },
+            {
+                "property": "unit_of_measurement",
+                "value": "%"
+            },
+            {
+                "property": "state_class",
+                "value": ""
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "aad6d111.1f1d3",
+        "type": "server",
+        "name": "Home Assistant",
+        "addon": true
+    }
+]
