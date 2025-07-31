@@ -4,7 +4,7 @@ This folder contains the full Node-RED flow configuration for decoding and routi
 
 ---
 
-## 📡 Overview
+## Overview
 
 This flow handles the following:
 
@@ -17,7 +17,7 @@ This flow handles the following:
 
 ---
 
-## 🛠 Components Used
+## Components Used
 
 - **MQTT Broker**: Receives LoRa uplinks (default: `10.69.2.69:1883`)
 - **Function Node**: Decodes Dragino LHT65N payloads and transforms them into human-readable format
@@ -27,7 +27,7 @@ This flow handles the following:
 
 ---
 
-## 🔄 Payload Decoding Highlights
+## Payload Decoding Highlights
 
 The flow decodes these fields (with conversions):
 
@@ -53,7 +53,7 @@ Also includes metadata like:
 
 ---
 
-## 🏠 Integrated Home Assistant Sensors
+## Integrated Home Assistant Sensors
 
 The flow maps each device EUI to corresponding HA sensors, such as:
 
@@ -66,7 +66,7 @@ Attributes sent to HA include temperature, humidity, battery info, and device EU
 
 ---
 
-## 🌐 MQTT Topics (Output)
+## MQTT Topics (Output)
 
 Example topics:
 - `home/deepfreezer/temperature/<deviceEUI>`
@@ -77,7 +77,7 @@ Payloads are JSON and match the transformed `msg.payload`.
 
 ---
 
-## ⚙️ Notes
+## Notes
 
 - Ensure MQTT and HA integrations are correctly configured and credentials are securely stored.
 - Add or update `deviceEUI` values in the **Switch Node** to match new sensors.
@@ -85,7 +85,7 @@ Payloads are JSON and match the transformed `msg.payload`.
 
 ---
 
-## 🔒 Security & Performance
+## Security & Performance
 
 - Set MQTT authentication as needed.
 - Ensure Home Assistant has appropriate entity IDs configured.
@@ -93,7 +93,7 @@ Payloads are JSON and match the transformed `msg.payload`.
 
 ---
 
-## 📁 File Type
+## File Type
 
 This file is exported from Node-RED and stored in `.json` format. Import it into Node-RED via:
 
@@ -101,12 +101,12 @@ This file is exported from Node-RED and stored in `.json` format. Import it into
 
 ---
 
-## 📄 License
+## License
 
 MIT or your project-specific license.
 
 ---
 
-## 🙋 Support
+## Support
 
 For help, reach out via your standard support channel or repository issues tab.
